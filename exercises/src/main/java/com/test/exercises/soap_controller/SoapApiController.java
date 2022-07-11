@@ -6,7 +6,7 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.test.exercises.services.ApiDataService;
+import com.test.exercises.services.LogApiDataService;
 import com.test.exercises.services.CountryService;
 import com.test.exercises.services.PrimeNumbersService;
 import com.test.utils.soap_test.Currency;
@@ -20,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Endpoint
 @Log4j2
-public class SoapEndpoint {
+public class SoapApiController {
 
     private static final String NAMESPACE_URI = "http://com/test/utils/soap_test";
 
@@ -31,7 +31,7 @@ public class SoapEndpoint {
     PrimeNumbersService primeNumbersService;
 
     @Autowired
-    ApiDataService apiDataService;
+    LogApiDataService logApiDataService;
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountryCurrencyRequest")
     @ResponsePayload
@@ -42,7 +42,7 @@ public class SoapEndpoint {
         currency.setCurrencyISOCode(currencyISOCode != null && !currencyISOCode.isBlank() ? currencyISOCode : "");
         response.setCurrency(currency);
         log.info("Returning the Currency ISO Code of the following country: " + request.getCountryName());
-        apiDataService.saveLog(request.getCountryName(), currency.getCurrencyISOCode(), "SOAP");
+        logApiDataService.saveLog(request.getCountryName(), currency.getCurrencyISOCode(), "SOAP", "SUCCESS");
         return response;
 
     }
@@ -53,7 +53,7 @@ public class SoapEndpoint {
         GetPrimeNumberResponse response = new GetPrimeNumberResponse();
         response.setResult(primeNumbersService.findAndSumPrimes(request.getNumber()));
         log.info("Returning the sum of all the prime numbers until: " + request);
-        apiDataService.saveLog(String.valueOf(request.getNumber()), String.valueOf(response.getResult()), "SOAP");
+        logApiDataService.saveLog(String.valueOf(request.getNumber()), String.valueOf(response.getResult()), "SOAP", "SUCCESS");
         return response;
     }
 }

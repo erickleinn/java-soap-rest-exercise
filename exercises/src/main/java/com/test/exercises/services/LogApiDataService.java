@@ -3,23 +3,24 @@ package com.test.exercises.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.test.exercises.entity.ApiData;
-import com.test.exercises.repositories.ApiDataRepository;
+import com.test.exercises.persistence_entities.LogApiData;
+import com.test.exercises.repositories.LogApiDataRepository;
 
 import lombok.extern.log4j.Log4j2;
 
 @Service
 @Log4j2
-public class ApiDataService {
+public class LogApiDataService {
 
     @Autowired
-    ApiDataRepository repository;
+    LogApiDataRepository repository;
 
-    public ApiData saveLog(String request, String response, String type){
-        ApiData saveData = new ApiData();
+    public LogApiData saveLog(String request, String response, String type, String status){
+        LogApiData saveData = new LogApiData();
         saveData.setRequest(request);
         saveData.setResponse(response);
         saveData.setType(type);
+        saveData.setStatus(status);
         log.info("Persisting request, response and API type on the database.");
         return repository.save(saveData);
     }

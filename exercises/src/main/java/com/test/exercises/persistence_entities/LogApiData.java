@@ -1,4 +1,4 @@
-package com.test.exercises.entity;
+package com.test.exercises.persistence_entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,9 +11,9 @@ import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
 
 @Entity
-@Table(name = "api_data")
+@Table(name = "log_api_data")
 @Data
-public class ApiData {
+public class LogApiData {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -25,4 +25,6 @@ public class ApiData {
     private String request;
 
     private String response;
+
+    private String status;
 }

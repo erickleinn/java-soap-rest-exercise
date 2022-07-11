@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.test.exercises.services.ApiDataService;
+import com.test.exercises.entities.FindSumPrimeNumbersDTO;
+import com.test.exercises.services.LogApiDataService;
 import com.test.exercises.services.CountryService;
 import com.test.exercises.services.PrimeNumbersService;
 import com.test.utils.soap_test.Currency;
@@ -18,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequestMapping("/rest")
 @Log4j2
-public class RestEndpoint {
+public class RestApiController {
     
 	@Autowired
     CountryService countryService;
@@ -27,31 +29,34 @@ public class RestEndpoint {
     PrimeNumbersService primeNumbersService;
 
 	@Autowired
-	ApiDataService apiDataService;
+	LogApiDataService logApiDataService;
 
 	@GetMapping("/findCountryCurrency")
-	ResponseEntity<Currency> getCountryCurrency(@RequestParam("countryName") String countryName){
+	ResponseEntity<Currency> getCountryCurrency(String countryName){
 		if(countryName == null || countryName.isBlank()){
 			log.info("CountryName must not be null or blank.");
+			logApiDataService.saveLog(countryName, "CountryName must not be null or blank.", "REST", "400");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		String currencyISOCode = countryService.getCurrencyISOCode(countryName);
 		Currency currency = new Currency();
 		currency.setCurrencyISOCode(currencyISOCode != null && !currencyISOCode.isBlank() ? currencyISOCode : "");
 		log.info("Returning the Currency ISO Code of the following country: " + countryName);
-		apiDataService.saveLog(countryName, currency.getCurrencyISOCode(), "REST");
+		logApiDataService.saveLog(countryName, currency.getCurrencyISOCode(), "REST", "200");
 		return ResponseEntity.ok(currency);
 	}
 
-	@GetMapping("/findSumPrimeNumber")
-	ResponseEntity<Integer> findSumPrimeNumbers(@RequestParam("number") Integer number){
-		if(number == null){
-			log.info("Number must not be null");
+	@PostMapping("/findSumPrimeNumber")
+	ResponseEntity<FindSumPrimeNumbersDTO> findSumPrimeNumbers(@RequestBody FindSumPrimeNumbersDTO request){
+		if(request.getNumber() == null){
+			log.info("Number must not be null.");
+			logApiDataService.saveLog(null, "Number must not be null.", "REST", "400");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		Integer response = primeNumbersService.findAndSumPrimes(number);
-		log.info("Returning the sum of all the prime numbers until: " + number);
-		apiDataService.saveLog(number.toString(), response.toString(), "REST");
+		FindSumPrimeNumbersDTO response = new FindSumPrimeNumbersDTO();
+		response.setNumber(primeNumbersService.findAndSumPrimes(request.getNumber()));
+		log.info("Returning the sum of all the prime numbers until: " + request.getNumber());
+		logApiDataService.saveLog(request.getNumber().toString(), response.getNumber().toString(), "REST", "200");
 		return ResponseEntity.ok(response);
 	}
     
