@@ -6,6 +6,7 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import com.test.exercises.services.ApiDataService;
 import com.test.exercises.services.CountryService;
 import com.test.exercises.services.PrimeNumbersService;
 import com.test.utils.soap_test.Currency;
@@ -29,6 +30,9 @@ public class SoapEndpoint {
     @Autowired
     PrimeNumbersService primeNumbersService;
 
+    @Autowired
+    ApiDataService apiDataService;
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountryCurrencyRequest")
     @ResponsePayload
     public GetCountryCurrencyResponse getCountryCurrency(@RequestPayload GetCountryCurrencyRequest request) {
@@ -38,6 +42,7 @@ public class SoapEndpoint {
         currency.setCurrencyISOCode(currencyISOCode != null && !currencyISOCode.isBlank() ? currencyISOCode : "");
         response.setCurrency(currency);
         log.info("Returning the Currency ISO Code of the following country: " + request.getCountryName());
+        apiDataService.saveLog(request.getCountryName(), currency.getCurrencyISOCode(), "SOAP");
         return response;
 
     }
@@ -48,6 +53,7 @@ public class SoapEndpoint {
         GetPrimeNumberResponse response = new GetPrimeNumberResponse();
         response.setResult(primeNumbersService.findAndSumPrimes(request.getNumber()));
         log.info("Returning the sum of all the prime numbers until: " + request);
+        apiDataService.saveLog(String.valueOf(request.getNumber()), String.valueOf(response.getResult()), "SOAP");
         return response;
     }
 }
