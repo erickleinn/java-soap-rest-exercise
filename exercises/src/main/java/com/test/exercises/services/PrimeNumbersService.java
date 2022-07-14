@@ -4,20 +4,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PrimeNumbersService {
+
     public Integer findAndSumPrimes(Integer prime){
-        int count, result = 0; 
-        for(int i = 1; i <= prime; i++) {  
-            count = 0;  
-            for (int j = 2; j <= i/2; j++) {      
-                if(i % j== 0) {   
-                    count++;  
-                    break;  
-                }  
-            }
-            if(count == 0 && i != 1 ) {       
-                result += i;  
-            }  
+        Integer result = 0;
+        for(int i = 2; i <= prime; i++){
+            if(isPrime(i))
+                result += i;
         }
-       return result; 
+        return result;
+    }
+
+    public Boolean isPrime(Integer number){
+        for(int i = 2; i < number ; i++){
+            if(number % i == 0)
+                return false;
+        }
+        return true;
     }
 }
