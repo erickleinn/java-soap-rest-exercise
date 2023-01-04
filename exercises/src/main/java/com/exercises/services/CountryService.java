@@ -1,4 +1,4 @@
-package com.test.exercises.services;
+package com.exercises.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.test.exercises.soap_configuration.CountryClient;
+import com.exercises.soap_configuration.CountryClient;
 import com.test.utils.soap_methods.FullCountryInfoAllCountriesResponse;
 import com.test.utils.soap_methods.TCountryInfo;
 

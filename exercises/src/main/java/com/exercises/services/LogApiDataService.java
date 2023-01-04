@@ -1,10 +1,10 @@
-package com.test.exercises.services;
+package com.exercises.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.test.exercises.persistence_entities.LogApiData;
-import com.test.exercises.repositories.LogApiDataRepository;
+import com.exercises.persistence_entities.LogApiData;
+import com.exercises.repositories.LogApiDataRepository;
 
 import lombok.extern.log4j.Log4j2;
 

@@ -1,4 +1,4 @@
-package com.test.exercises.entities;
+package com.exercises.entities;
 
 import lombok.Data;
 

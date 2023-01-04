@@ -1,4 +1,4 @@
-package com.test.exercises.rest_controller;
+package com.exercises.rest_controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.test.exercises.entities.FindSumPrimeNumbersDTO;
-import com.test.exercises.services.LogApiDataService;
-import com.test.exercises.services.CountryService;
-import com.test.exercises.services.PrimeNumbersService;
+import com.exercises.entities.FindSumPrimeNumbersDTO;
+import com.exercises.services.CountryService;
+import com.exercises.services.LogApiDataService;
+import com.exercises.services.PrimeNumbersService;
 import com.test.utils.soap_test.Currency;
 
 import lombok.extern.log4j.Log4j2;

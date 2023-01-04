@@ -1,4 +1,4 @@
-package com.test.exercises.soap_configuration;
+package com.exercises.soap_configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

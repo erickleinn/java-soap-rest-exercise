@@ -1,4 +1,4 @@
-package com.test.exercises.soap_controller;
+package com.exercises.soap_controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -6,9 +6,9 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.test.exercises.services.LogApiDataService;
-import com.test.exercises.services.CountryService;
-import com.test.exercises.services.PrimeNumbersService;
+import com.exercises.services.CountryService;
+import com.exercises.services.LogApiDataService;
+import com.exercises.services.PrimeNumbersService;
 import com.test.utils.soap_test.Currency;
 import com.test.utils.soap_test.GetCountryCurrencyRequest;
 import com.test.utils.soap_test.GetCountryCurrencyResponse;
